@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>دليل المستشفيات في مصر</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      background-color: #f7f7f7;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #0077b6;
+    }
+
+    .hospital-list button {
+      display: block;
+      width: 300px;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 18px;
+      background-color: #00b4d8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .hospital-list button:hover {
+      background-color: #0096c7;
+    }
+
+    .details {
+      display: none;
+      background: white;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      margin-right: auto;
+      margin-left: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sub-buttons button {
+      display: inline-block;
+      margin: 8px;
+      padding: 10px 20px;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .sub-buttons button:hover {
+      background-color: #005f8d;
+    }
+
+    .info-box {
+      margin-top: 20px;
+      background-color: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏥 أشهر 10 مستشفيات في مصر</h1>
+
+  <div class="hospital-list">
+    <button onclick="showDetails('qasr')">1. مستشفى القصر العيني</button>
+    <button onclick="showDetails('daralfouad')">2. مستشفى دار الفؤاد</button>
+    <button onclick="showDetails('salam')">3. مستشفى السلام الدولي</button>
+    <button onclick="showDetails('57357')">4. مستشفى 57357</button>
+    <button onclick="showDetails('magdi')">5. مستشفى مجدي يعقوب</button>
+  </div>
+
+  <div class="details" id="details"></div>
+
+  <script>
+    const hospitals = {
+      qasr: {
+        name: "مستشفى القصر العيني",
+        doctors: ["د. أحمد علي – جراحة", "د. نسرين فؤاد – قلب", "د. محمد الشناوي – أعصاب"],
+        specialties: ["جراحة عامة", "قلب", "أعصاب", "عظام"],
+        hours: "من السبت إلى الخميس: 8 صباحًا - 8 مساءً",
+        facebook: "https://www.facebook.com/QasrElAiniHospital",
+        phone: "02 2364 1234"
+      },
+      daralfouad: {
+        name: "مستشفى دار الفؤاد",
+        doctors: ["د. سامي جمال – قلب", "د. منى حسين – كبد", "د. أيمن شكري – مخ وأعصاب"],
+        specialties: ["قلب", "كبد", "مخ وأعصاب", "عظام"],
+        hours: "يومياً: 9 صباحًا - 9 مساءً",
+        facebook: "https://www.facebook.com/DarAlFouadHospital",
+        phone: "02 3531 0000"
+      },
+      salam: {
+        name: "مستشفى السلام الدولي",
+        doctors: ["د. أحمد سمير – مناظير", "د. لبنى جابر – تجميل"],
+        specialties: ["تجميل", "باطنة", "مناظير"],
+        hours: "طوال الأسبوع: 24 ساعة",
+        facebook: "https://www.facebook.com/AlsalamInternationalHospital",
+        phone: "02 2521 1000"
+      },
+      "57357": {
+        name: "مستشفى 57357",
+        doctors: ["د. سعاد محسن – أورام أطفال", "د. محمد طلعت – تحاليل"],
+        specialties: ["أورام أطفال", "تحاليل", "أشعة"],
+        hours: "يومياً: 8 صباحًا - 6 مساءً",
+        facebook: "https://www.facebook.com/57357Hospital",
+        phone: "19057"
+      },
+      magdi: {
+        name: "مستشفى مجدي يعقوب",
+        doctors: ["د. مجدي يعقوب – قلب", "د. أميرة هاني – تخدير"],
+        specialties: ["جراحة قلب", "أطفال", "عناية مركزة"],
+        hours: "الأحد - الخميس: 9 صباحًا - 5 مساءً",
+        facebook: "https://www.facebook.com/MagdiYacoubFoundation",
+        phone: "02 3776 0000"
+      }
+    };
+
+    function showDetails(key) {
+      const h = hospitals[key];
+      const container = document.getElementById("details");
+
+      container.innerHTML = `
+        <h2>${h.name}</h2>
+        <div class="sub-buttons">
+          <button onclick="showInfo('${key}', 'doctors')">👨‍⚕️ الأطباء</button>
+          <button onclick="showInfo('${key}', 'specialties')">🏥 التخصصات</button>
+          <button onclick="showInfo('${key}', 'hours')">🕒 أوقات العمل</button>
+          <button onclick="showInfo('${key}', 'facebook')">📘 صفحة فيسبوك</button>
+          <button onclick="showInfo('${key}', 'phone')">📞 رقم المستشفى</button>
+        </div>
+        <div class="info-box" id="infoBox"></div>
+      `;
+      container.style.display = "block";
+      container.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function showInfo(key, type) {
+      const h = hospitals[key];
+      const box = document.getElementById("infoBox");
+
+      let html = "";
+      switch (type) {
+        case "doctors":
+          html = "<h3>👨‍⚕️ الأطباء:</h3><ul>" + h.doctors.map(d => `<li>${d}</li>`).join("") + "</ul>";
+          break;
+        case "specialties":
+          html = "<h3>🏥 التخصصات:</h3><ul>" + h.specialties.map(s => `<li>${s}</li>`).join("") + "</ul>";
+          break;
+        case "hours":
+          html = `<h3>🕒 أوقات العمل:</h3><p>${h.hours}</p>`;
+          break;
+        case "facebook":
+          html = `<h3>📘 صفحة فيسبوك:</h3><a href="${h.facebook}" target="_blank">${h.facebook}</a>`;
+          break;
+        case "phone":
+          html = `<h3>📞 رقم المستشفى:</h3><p>${h.phone}</p>`;
+          break;
+      }
+      box.innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>
